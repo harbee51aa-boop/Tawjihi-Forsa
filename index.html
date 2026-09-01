@@ -1,0 +1,2079 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>TawjihiForsa - منصة الأسئلة الوزارية</title>
+    <meta name="description" content="منصتك الموثوقة للتحضير لامتحانات التوجيهي بأسئلة وزارية حقيقية ومحاكاة شاملة للمنهاج الأردني">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: ['class'],
+            theme: {
+                extend: {
+                    colors: {
+                        border: 'hsl(20, 5.9%, 90%)',
+                        input: 'hsl(20, 5.9%, 90%)',
+                        ring: 'hsl(20, 14.3%, 4.1%)',
+                        background: 'hsl(0, 0%, 100%)',
+                        foreground: 'hsl(20, 14.3%, 4.1%)',
+                        primary: {
+                            DEFAULT: 'hsl(207, 90%, 54%)',
+                            foreground: 'hsl(211, 100%, 99%)',
+                        },
+                        secondary: {
+                            DEFAULT: 'hsl(60, 4.8%, 95.9%)',
+                            foreground: 'hsl(24, 9.8%, 10%)',
+                        },
+                        destructive: {
+                            DEFAULT: 'hsl(0, 84.2%, 60.2%)',
+                            foreground: 'hsl(60, 9.1%, 97.8%)',
+                        },
+                        muted: {
+                            DEFAULT: 'hsl(60, 4.8%, 95.9%)',
+                            foreground: 'hsl(25, 5.3%, 44.7%)',
+                        },
+                        accent: {
+                            DEFAULT: 'hsl(60, 4.8%, 95.9%)',
+                            foreground: 'hsl(24, 9.8%, 10%)',
+                        },
+                        popover: {
+                            DEFAULT: 'hsl(0, 0%, 100%)',
+                            foreground: 'hsl(20, 14.3%, 4.1%)',
+                        },
+                        card: {
+                            DEFAULT: 'hsl(0, 0%, 100%)',
+                            foreground: 'hsl(20, 14.3%, 4.1%)',
+                        },
+                        surface: 'hsl(60, 4.8%, 98%)',
+                        'on-surface': 'hsl(20, 14.3%, 4.1%)',
+                        success: 'hsl(142, 76%, 36%)',
+                        error: 'hsl(0, 84.2%, 60.2%)',
+                    },
+                    borderRadius: {
+                        lg: 'var(--radius)',
+                        md: 'calc(var(--radius) - 2px)',
+                        sm: 'calc(var(--radius) - 4px)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --radius: 0.5rem;
+        }
+        
+        * {
+            border-color: theme('colors.border');
+        }
+        
+        body {
+            font-family: 'Noto Sans Arabic', 'Tahoma', sans-serif;
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        
+        .question-card {
+            min-height: 400px;
+        }
+        
+        .social-icon {
+            transition: transform 0.2s ease;
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .welcome-title {
+            line-height: 1.2;
+        }
+
+        .brand-title {
+            transform: translateY(8px);
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <div id="app">
+        <!-- Home Screen -->
+        <section id="home-screen" class="fade-in">
+            <div class="max-w-4xl mx-auto px-4 py-16 text-center">
+                <!-- Welcome Section -->
+                <div class="mb-12">
+                    <h2 class="text-4xl md:text-5xl font-bold text-on-surface mb-4 welcome-title">
+                        مرحباً بك في
+                    </h2>
+                    <h1 class="text-5xl md:text-6xl font-bold text-primary mb-8 brand-title">
+                        TawjihiForsa
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
+                        منصتك الموثوقة للتحضير لامتحانات التوجيهي بأسئلة وزارية حقيقية ومحاكاة شاملة
+                    </p>
+                </div>
+                
+                <!-- CTA Button -->
+                <button 
+                    onclick="showSubjects()"
+                    class="bg-primary hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                >
+                    ابدأ باختبارك
+                </button>
+                
+                <!-- Features -->
+                <div class="mt-16 grid md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-sm border border-border card-hover">
+                        <div class="p-6 text-center">
+                            <div class="text-4xl mb-4">📚</div>
+                            <h3 class="text-xl font-semibold mb-2">أسئلة وزارية حقيقية</h3>
+                            <p class="text-gray-600">أسئلة من امتحانات وزارية سابقة لضمان التحضير الأمثل</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm border border-border card-hover">
+                        <div class="p-6 text-center">
+                            <div class="text-4xl mb-4">⚡</div>
+                            <h3 class="text-xl font-semibold mb-2">تقييم فوري</h3>
+                            <p class="text-gray-600">احصل على نتائجك فوراً مع تفصيل شامل للأداء</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm border border-border card-hover">
+                        <div class="p-6 text-center">
+                            <div class="text-4xl mb-4">📱</div>
+                            <h3 class="text-xl font-semibold mb-2">تصميم متجاوب</h3>
+                            <p class="text-gray-600">متاح على جميع الأجهزة للدراسة في أي وقت ومكان</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subjects Screen -->
+        <section id="subjects-screen" class="fade-in hidden">
+            <div class="max-w-4xl mx-auto px-4 py-16">
+                <h2 class="text-3xl font-bold text-center mb-12">اختر المادة الدراسية</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-sm border border-border card-hover cursor-pointer" onclick="showSemesters('islamic')">
+                        <div class="p-8 text-center">
+                            <div class="text-6xl mb-4">📖</div>
+                            <h3 class="text-2xl font-bold mb-4 text-primary">التربية الإسلامية</h3>
+                            <p class="text-gray-600 mb-4">أسئلة وزارية حقيقية مقسمة على الوحدات</p>
+                            <span class="inline-flex items-center rounded-full border border-transparent bg-success px-2.5 py-0.5 text-xs font-semibold text-white">
+                                100 سؤال حقيقي
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm border border-border card-hover cursor-pointer" onclick="showSemesters('arabic')">
+                        <div class="p-8 text-center">
+                            <div class="text-6xl mb-4">✍️</div>
+                            <h3 class="text-2xl font-bold mb-4 text-primary">اللغة العربية</h3>
+                            <p class="text-gray-600 mb-4">أسئلة تجريبية شاملة للمنهاج</p>
+                            <span class="inline-flex items-center rounded-full border border-transparent bg-orange-500 px-2.5 py-0.5 text-xs font-semibold text-white">
+                                قيد التطوير
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm border border-border card-hover cursor-pointer" onclick="showSemesters('english')">
+                        <div class="p-8 text-center">
+                            <div class="text-6xl mb-4">🇬🇧</div>
+                            <h3 class="text-2xl font-bold mb-4 text-primary">اللغة الإنجليزية</h3>
+                            <p class="text-gray-600 mb-4">English practice questions</p>
+                            <span class="inline-flex items-center rounded-full border border-transparent bg-orange-500 px-2.5 py-0.5 text-xs font-semibold text-white">
+                                قيد التطوير
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm border border-border card-hover cursor-pointer" onclick="showSemesters('history')">
+                        <div class="p-8 text-center">
+                            <div class="text-6xl mb-4">🏛️</div>
+                            <h3 class="text-2xl font-bold mb-4 text-primary">التاريخ</h3>
+                            <p class="text-gray-600 mb-4">أسئلة تاريخية شاملة</p>
+                            <span class="inline-flex items-center rounded-full border border-transparent bg-orange-500 px-2.5 py-0.5 text-xs font-semibold text-white">
+                                قيد التطوير
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-8">
+                    <button onclick="showHome()" class="bg-secondary text-secondary-foreground hover:bg-secondary/80 px-4 py-2 rounded-md">
+                        العودة للرئيسية
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Semesters Screen -->
+        <section id="semesters-screen" class="fade-in hidden">
+            <div class="max-w-4xl mx-auto px-4 py-16">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4">اختر الفصل الدراسي</h2>
+                    <p id="subject-name" class="text-xl text-gray-600"></p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+                    <div class="bg-white rounded-lg shadow-sm border border-border card-hover cursor-pointer" onclick="startQuiz('first')">
+                        <div class="p-8 text-center">
+                            <div class="text-6xl mb-4">📘</div>
+                            <h3 class="text-2xl font-bold mb-4 text-primary">الفصل الأول</h3>
+                            <p class="text-gray-600">أسئلة الفصل الدراسي الأول</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm border border-border card-hover cursor-pointer" onclick="startQuiz('second')">
+                        <div class="p-8 text-center">
+                            <div class="text-6xl mb-4">📗</div>
+                            <h3 class="text-2xl font-bold mb-4 text-primary">الفصل الثاني</h3>
+                            <p class="text-gray-600">أسئلة الفصل الدراسي الثاني</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-8">
+                    <button onclick="showSubjects()" class="bg-secondary text-secondary-foreground hover:bg-secondary/80 px-4 py-2 rounded-md">
+                        العودة لاختيار المادة
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Start Screen -->
+        <section id="quiz-start-screen" class="fade-in hidden">
+            <div class="max-w-2xl mx-auto px-4 py-16 text-center">
+                <div class="bg-white rounded-lg shadow-sm border border-border p-8">
+                    <h1 id="quiz-title" class="text-3xl font-bold text-primary mb-4"></h1>
+                    <p id="quiz-info" class="text-xl text-gray-700 mb-6"></p>
+                    <p class="text-lg text-gray-600 mb-8">مدة الاختبار: ساعة واحدة (60 دقيقة)</p>
+                    
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                        <p class="text-yellow-800 font-medium">
+                            ⚠️ تنبيه: بمجرد النقر على "بدء الاختبار" سيبدأ العداد التنازلي ولا يمكن إيقافه
+                        </p>
+                    </div>
+                    
+                    <button onclick="startQuizTimer()" class="bg-success hover:bg-success/80 text-white px-8 py-3 text-lg font-medium rounded-lg mb-4">
+                        🚀 بدء الاختبار
+                    </button>
+                    
+                    <div class="mt-4">
+                        <button onclick="showSemesters(currentSubject)" class="bg-secondary text-secondary-foreground hover:bg-secondary/80 px-4 py-2 rounded-md">
+                            العودة لاختيار الفصل
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Screen -->
+        <section id="quiz-screen" class="fade-in hidden">
+            <div class="max-w-4xl mx-auto px-4 py-8">
+                <!-- Quiz Header -->
+                <div class="bg-white rounded-lg shadow-sm border border-border mb-6">
+                    <div class="p-6">
+                        <div class="flex flex-col md:flex-row justify-between items-center">
+                            <div>
+                                <h2 id="quiz-header-title" class="text-2xl font-bold text-primary mb-2"></h2>
+                                <p id="quiz-unit" class="text-gray-600"></p>
+                            </div>
+                            <div class="mt-4 md:mt-0">
+                                <div class="flex flex-col items-center space-y-2">
+                                    <div class="flex items-center space-x-4 space-x-reverse">
+                                        <span id="question-counter" class="text-lg font-medium"></span>
+                                        <button onclick="finishQuiz()" class="bg-destructive hover:bg-destructive/80 text-destructive-foreground px-4 py-2 rounded-md font-medium">
+                                            إنهاء الاختبار
+                                        </button>
+                                    </div>
+                                    <div id="timer-display" class="text-lg font-bold text-success"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Progress Bar -->
+                        <div class="mt-4">
+                            <div class="w-full bg-secondary rounded-full h-2">
+                                <div id="progress-bar" class="bg-primary h-2 rounded-full progress-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Question Card -->
+                <div class="bg-white rounded-lg shadow-sm border border-border question-card">
+                    <div class="p-8">
+                        <div class="mb-8">
+                            <h3 id="question-text" class="text-xl font-bold mb-6 leading-relaxed"></h3>
+                            
+                            <div id="options-container" class="space-y-3">
+                                <!-- Options will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation -->
+                <div class="mt-6 flex justify-between">
+                    <button id="prev-btn" onclick="navigateQuestion(-1)" class="bg-secondary text-secondary-foreground hover:bg-secondary/80 px-6 py-3 font-medium rounded-md">
+                        السؤال السابق
+                    </button>
+                    <div class="flex flex-col items-end">
+                        <button id="next-btn" onclick="navigateQuestion(1)" class="bg-primary hover:bg-primary/80 text-primary-foreground px-6 py-3 font-medium rounded-md" disabled>
+                            السؤال التالي
+                        </button>
+                        <p id="answer-required-msg" class="text-sm text-destructive mt-2 hidden">
+                            يجب اختيار إجابة للمتابعة
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Screen -->
+        <section id="results-screen" class="fade-in hidden">
+            <div class="max-w-4xl mx-auto px-4 py-16">
+                <div class="bg-white rounded-lg shadow-lg border border-border">
+                    <div class="p-8">
+                        <div class="text-center mb-8">
+                            <div id="result-icon" class="text-8xl mb-4"></div>
+                            <h2 class="text-3xl font-bold mb-4">نتائج الاختبار</h2>
+                            <div id="result-percentage" class="text-6xl font-bold mb-4"></div>
+                            <p id="result-message" class="text-xl text-gray-600 mb-4"></p>
+                            
+                            <!-- عرض حالة النجاح/الرسوب -->
+                            <div id="pass-status" class="text-2xl font-bold mb-8 px-6 py-3 rounded-lg"></div>
+                        </div>
+                        
+                        <!-- Overall Stats -->
+                        <div class="mb-6">
+                            <div class="bg-gray-50 rounded-lg border border-border">
+                                <div class="p-4">
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                                        <div>
+                                            <div class="font-medium text-gray-600">إجمالي الأسئلة</div>
+                                            <div id="total-questions" class="font-bold text-2xl"></div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-gray-600">الإجابات الصحيحة</div>
+                                            <div id="total-correct" class="font-bold text-2xl text-success"></div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-gray-600">الإجابات الخاطئة</div>
+                                            <div id="total-incorrect" class="font-bold text-2xl text-destructive"></div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-gray-600">الوقت المستغرق</div>
+                                            <div id="time-taken" class="font-bold text-2xl"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Unit Results -->
+                        <div class="mb-8">
+                            <h4 class="text-xl font-bold mb-4">نتائج الوحدات:</h4>
+                            <div id="unit-results" class="space-y-3">
+                                <!-- Unit results will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <!-- Actions -->
+                        <div class="text-center space-y-4">
+                            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                                <button onclick="retryQuiz()" class="bg-primary hover:bg-primary/80 text-primary-foreground px-8 py-3 font-bold rounded-md">
+                                    إعادة المحاولة
+                                </button>
+                                <button onclick="showHome()" class="bg-secondary text-secondary-foreground hover:bg-secondary/80 px-8 py-3 font-bold rounded-md">
+                                    العودة للرئيسية
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-50 border-t border-border py-8 mt-16">
+            <div class="max-w-4xl mx-auto px-4 text-center">
+                <h3 class="text-lg font-semibold mb-4">المطور</h3>
+                <div class="flex justify-center items-center gap-6">
+                    <!-- Telegram -->
+                    <a href="https://t.me/Hajes_511" target="_blank" class="flex items-center gap-2 text-blue-500 hover:text-blue-600 transition-colors social-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16l-1.58 7.44c-.12.52-.44.65-.89.4l-2.46-1.82-1.19 1.14c-.13.13-.24.24-.49.24l.17-2.44 4.54-4.1c.2-.18-.04-.28-.31-.1L9.39 13.3l-2.42-.76c-.53-.16-.54-.53.11-.79l9.42-3.63c.44-.16.83.1.68.78z"/>
+                        </svg>
+                        <span class="font-medium">Hajes_511</span>
+                    </a>
+                    
+                    <!-- Instagram -->
+                    <a href="https://instagram.com/harbee51_aa" target="_blank" class="flex items-center gap-2 text-pink-500 hover:text-pink-600 transition-colors social-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                        <span class="font-medium">harbee51_aa</span>
+                    </a>
+                </div>
+                
+                <div class="mt-4 text-sm text-gray-500">
+                    <p>&copy; 2025 TawjihiForsa - جميع الحقوق محفوظة</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Application State
+        let currentSubject = '';
+        let currentSemester = '';
+        let questions = [];
+        let quizState = {
+            currentQuestionIndex: 0,
+            userAnswers: [],
+            startTime: null,
+            isCompleted: false,
+            timeLeft: 3600 // ساعة واحدة بالثواني
+        };
+        let timerInterval = null;
+
+        // Subject Names
+        const subjectNames = {
+            islamic: 'التربية الإسلامية',
+            arabic: 'اللغة العربية',
+            english: 'اللغة الإنجليزية',
+            history: 'التاريخ'
+        };
+
+        // Islamic Studies Questions Data (same as before)
+        const islamicFirstSemesterQuestions = [
+            // الوحدة الأولى: التمسك بالإسلام
+            {
+                question: 'ما المقصود بـ "حبل الله" في سورة آل عمران؟',
+                options: ["القرآن والسنة", "الصلاة", "المساجد", "الأخلاق"],
+                correct: 0,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: "ما حكم التفرق بين المسلمين؟",
+                options: ["جائز", "حرام", "مكروه", "مستحب"],
+                correct: 1,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: 'كم مرة ذكرت كلمة "التقوى" في سورة آل عمران؟',
+                options: ["٥", "٧", "٩", "١١"],
+                correct: 1,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: "ما أول عمل قام به النبي ﷺ بعد الهجرة؟",
+                options: ["بناء المسجد النبوي", "المؤاخاة بين المهاجرين والأنصار", "وضع وثيقة المدينة", "جميع ما سبق"],
+                correct: 3,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: 'ما معنى "المُضغة" في الحديث الشريف؟',
+                options: ["العين", "القلب", "اللسان", "العقل"],
+                correct: 1,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: "ما حكم الرياء في العبادة؟",
+                options: ["شرك أصغر", "كفر أكبر", "بدعة", "معصية"],
+                correct: 0,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: 'من الصحابي الذي روى حديث "اتقوا الشبهات"؟',
+                options: ["النعمان بن بشير", "أبو هريرة", "أنس بن مالك", "عبد الله بن مسعود"],
+                correct: 0,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: "ما عدد آيات سورة آل عمران؟",
+                options: ["١٥٠", "٢٠٠", "٢٥٠", "٣٠٠"],
+                correct: 1,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: 'ما السورة التي تسمى "زهراء القرآن"؟',
+                options: ["البقرة", "آل عمران", "النساء", "المائدة"],
+                correct: 1,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: "ما حكم من أنكر فرضية الصلاة؟",
+                options: ["عاصٍ", "كافر", "منافق", "مبتدع"],
+                correct: 1,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: "ما أول آية نزلت في المدينة؟",
+                options: ["﴿يَا أَيُّهَا الْمُدَّثِّرُ﴾", "﴿وَاتَّقُوا يَوْمًا تُرْجَعُونَ فِيهِ إِلَى اللَّهِ﴾", "﴿أُحِلَّ لَكُمْ لَيْلَةَ الصِّيَامِ﴾", "﴿وَأْمُرْ بِالْمَعْرُوفِ﴾"],
+                correct: 1,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: "ما اسم الصحابي الذي اهتز لموته عرش الرحمن؟",
+                options: ["سعد بن معاذ", "حمزة بن عبد المطلب", "مصعب بن عمير", "بلال بن رباح"],
+                correct: 0,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: 'ما حكم العمل "بالعزيمة"؟',
+                options: ["واجب", "مستحب", "مباح", "مكروه"],
+                correct: 0,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: 'ما مثال على "النفاق العملي"؟',
+                options: ["الكذب في الحديث", "ترك الصلاة", "إنكار القدر", "سب الدين"],
+                correct: 0,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: "ما السورة التي نزلت في غزوة الأحزاب؟",
+                options: ["الحشر", "الأحزاب", "الفتح", "التوبة"],
+                correct: 1,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: "كم عدد أبواب الجنة؟",
+                options: ["٧", "٨", "٩", "١٠"],
+                correct: 1,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: "ما أول غزوة في الإسلام؟",
+                options: ["بدر", "أحد", "الخندق", "تبوك"],
+                correct: 0,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: "ما حكم التيمم عند فقد الماء؟",
+                options: ["واجب", "جائز", "مكروه", "حرام"],
+                correct: 1,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: "من الذي جمع القرآن أول مرة؟",
+                options: ["أبو بكر الصديق", "عمر بن الخطاب", "عثمان بن عفان", "علي بن أبي طالب"],
+                correct: 0,
+                unit: "التمسك بالإسلام"
+            },
+            {
+                question: 'ما السورة التي تسمى "قلب القرآن"؟',
+                options: ["يس", "الرحمن", "الواقعة", "الملك"],
+                correct: 0,
+                unit: "التمسك بالإسلام"
+            },
+
+            // الوحدة الثانية: الأسرة في الإسلام
+            {
+                question: "ما عدد المحرمات من النساء بسبب النسب؟",
+                options: ["٥", "٧", "٩", "١١"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما حكم زواج المسلمة بغير المسلم؟",
+                options: ["جائز", "حرام", "مكروه", "مباح بشروط"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما أقل عدد لرضعات التحريم؟",
+                options: ["٣", "٥", "٧", "١٠"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما حكم الزواج من المرأة المعتدة؟",
+                options: ["جائز", "حرام", "مكروه", "مباح"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: 'من النساء المحرمات "تحريمًا مؤقتًا"؟',
+                options: ["الأخت من الرضاع", "الزوجة المطلقة في العدة", "بنت العم", "الجدة"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما شرط صحة عقد الزواج؟",
+                options: ["وجود الوليمة", "خلو الزوجين من الموانع", "المهر العالي", "حضور الأقارب"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما حكم الجمع بين الأختين في الزواج؟",
+                options: ["جائز", "حرام", "مكروه", "مباح في الضرورة"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما عدد شروط الزواج؟",
+                options: ["٣", "٥", "٧", "٩"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما حكم زواج الرجل من خالته؟",
+                options: ["جائز", "حرام", "مكروه", "مباح"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما المدة القانونية للعدة بعد الطلاق؟",
+                options: ["شهر", "شهران", "ثلاثة أشهر", "أربعة أشهر"],
+                correct: 2,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما حكم التعدد في الزواج؟",
+                options: ["واجب", "حرام", "مباح بشروط", "مكروه"],
+                correct: 2,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما أول من أسلم من الصبيان؟",
+                options: ["علي بن أبي طالب", "زيد بن حارثة", "عبد الله بن مسعود", "مصعب بن عمير"],
+                correct: 0,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما السورة التي نزلت في تحريم الخمر؟",
+                options: ["البقرة", "المائدة", "النساء", "الأنعام"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما حكم الطلاق قبل الدخول؟",
+                options: ["يقع الطلاق", "لا يقع الطلاق", "يحتاج إلى شهود", "يعتمد على النية"],
+                correct: 0,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما عدد أنواع المحرمات في الزواج؟",
+                options: ["٢", "٣", "٤", "٥"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما أقل مدة للحمل؟",
+                options: ["٦ أشهر", "٩ أشهر", "سنة", "سنتان"],
+                correct: 0,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما حكم الإجهاض بعد ٤ أشهر؟",
+                options: ["جائز", "حرام", "مكروه", "مباح"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما عدد شروط المهر؟",
+                options: ["٢", "٣", "٤", "٥"],
+                correct: 0,
+                unit: "الأسرة في الإسلام"
+            },
+            {
+                question: "ما حكم الخِطبة؟",
+                options: ["واجبة", "مستحبة", "مكروهة", "مباحة"],
+                correct: 1,
+                unit: "الأسرة في الإسلام"
+            },
+
+            // الوحدة الثالثة: الجهاد
+            {
+                question: "متى يصبح الجهاد فرض عين؟",
+                options: ["عند السفر", "عند النفير العام", "في رمضان", "عند المرض"],
+                correct: 1,
+                unit: "الجهاد"
+            },
+            {
+                question: "من قاد معركة مؤتة؟",
+                options: ["خالد بن الوليد", "سعد بن أبي وقاص", "عمرو بن العاص", "الزبير بن العوام"],
+                correct: 0,
+                unit: "الجهاد"
+            },
+            {
+                question: "كم عدد شهداء مؤتة؟",
+                options: ["٨", "١٢", "١٥", "٢٠"],
+                correct: 1,
+                unit: "الجهاد"
+            },
+            {
+                question: "ما سبب معركة مؤتة؟",
+                options: ["قتل الحارث بن عمير", "غزو الروم للمدينة", "نقض العهود", "السيطرة على التجارة"],
+                correct: 0,
+                unit: "الجهاد"
+            },
+            {
+                question: "ما أول غزوة في الإسلام؟",
+                options: ["بدر", "أحد", "الخندق", "تبوك"],
+                correct: 0,
+                unit: "الجهاد"
+            },
+            {
+                question: "كم عدد غزوات النبي ﷺ؟",
+                options: ["١٥", "٢٠", "٢٧", "٣٠"],
+                correct: 2,
+                unit: "الجهاد"
+            },
+            {
+                question: "ما السورة التي نزلت في غزوة الأحزاب؟",
+                options: ["الحشر", "الأحزاب", "الفتح", "التوبة"],
+                correct: 1,
+                unit: "الجهاد"
+            },
+            {
+                question: 'من الصحابي الذي قال عنه النبي: "سيف من سيوف الله"؟',
+                options: ["خالد بن الوليد", "حمزة بن عبد المطلب", "سعد بن أبي وقاص", "علي بن أبي طالب"],
+                correct: 0,
+                unit: "الجهاد"
+            },
+            {
+                question: "ما حكم الجهاد في الإسلام؟",
+                options: ["فرض كفاية", "فرض عين", "سنة", "مباح"],
+                correct: 0,
+                unit: "الجهاد"
+            },
+            {
+                question: "ما أول معركة بحرية في الإسلام؟",
+                options: ["ذات الصواري", "صفين", "الجمل", "اليرموك"],
+                correct: 0,
+                unit: "الجهاد"
+            },
+            {
+                question: "من قائد معركة اليرموك؟",
+                options: ["خالد بن الوليد", "عمرو بن العاص", "سعد بن أبي وقاص", "أبو عبيدة"],
+                correct: 0,
+                unit: "الجهاد"
+            },
+            {
+                question: "كم عدد شهداء غزوة أحد؟",
+                options: ["٥٠", "٧٠", "٨٠", "١٠٠"],
+                correct: 1,
+                unit: "الجهاد"
+            },
+            {
+                question: "ما السورة التي نزلت في غزوة بني النضير؟",
+                options: ["الحشر", "التوبة", "الفتح", "الأحزاب"],
+                correct: 0,
+                unit: "الجهاد"
+            },
+            {
+                question: "من الصحابي الذي استشهد وهو يحمل راية المسلمين في مؤتة؟",
+                options: ["جعفر بن أبي طالب", "زيد بن حارثة", "عبد الله بن رواحة", "جميع ما سبق"],
+                correct: 3,
+                unit: "الجهاد"
+            },
+            {
+                question: "ما حكم قتل المدنيين في الحرب؟",
+                options: ["جائز", "حرام", "مباح", "مكروه"],
+                correct: 1,
+                unit: "الجهاد"
+            },
+            {
+                question: "ما أول معركة بين المسلمين والفرس؟",
+                options: ["القادسية", "نهاوند", "البويب", "ذات السلاسل"],
+                correct: 3,
+                unit: "الجهاد"
+            },
+            {
+                question: "من الذي قتل سيد الشهداء حمزة بن عبد المطلب؟",
+                options: ["أبو سفيان", "وحشي بن حرب", "هند بنت عتبة", "خالد بن الوليد"],
+                correct: 1,
+                unit: "الجهاد"
+            },
+            {
+                question: 'ما السورة التي تسمى "سورة الجهاد"؟',
+                options: ["التوبة", "الأنفال", "محمد", "الفتح"],
+                correct: 0,
+                unit: "الجهاد"
+            },
+            {
+                question: "كم عدد شهداء غزوة بدر؟",
+                options: ["١٠", "١٤", "١٨", "٢٠"],
+                correct: 1,
+                unit: "الجهاد"
+            },
+            {
+                question: "ما حكم الغدر في الحرب؟",
+                options: ["جائز", "حرام", "مباح", "مستحب"],
+                correct: 1,
+                unit: "الجهاد"
+            },
+
+            // الوحدة الرابعة: القرآن الكريم
+            {
+                question: "من أول من جمع القرآن؟",
+                options: ["أبو بكر الصديق", "عمر بن الخطاب", "عثمان بن عفان", "علي بن أبي طالب"],
+                correct: 0,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: 'ما السورة التي تسمى "عروس القرآن"؟',
+                options: ["الرحمن", "يس", "الواقعة", "الملك"],
+                correct: 0,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: 'كم مرة ذكر اسم "محمد" ﷺ في القرآن؟',
+                options: ["٣", "٤", "٥", "٦"],
+                correct: 1,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: "ما أطول آية في القرآن؟",
+                options: ["آية الدين", "آية الكرسي", "آية الصيام", "آية الميراث"],
+                correct: 0,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: "ما السورة التي نزلت دفعة واحدة؟",
+                options: ["الفاتحة", "الإخلاص", "المدثر", "الأنعام"],
+                correct: 2,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: "كم جزءاً في القرآن؟",
+                options: ["٢٠", "٣٠", "٤٠", "٦٠"],
+                correct: 1,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: 'ما السورة التي تبدأ بـ "يا أيها النبي"؟',
+                options: ["الأحزاب", "الطلاق", "التحريم", "الحجرات"],
+                correct: 0,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: "كم سجدة في القرآن؟",
+                options: ["١٠", "١٤", "١٥", "١٧"],
+                correct: 1,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: 'ما السورة التي تسمى "الساهرة"؟',
+                options: ["الواقعة", "القيامة", "التكوير", "الانفطار"],
+                correct: 1,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: 'من الصحابي الذي كان يسمى "حبر الأمة"؟',
+                options: ["عبد الله بن عباس", "عبد الله بن مسعود", "زيد بن ثابت", "أبي بن كعب"],
+                correct: 0,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: "ما السورة التي نزلت في حادثة الإفك؟",
+                options: ["النور", "الأحزاب", "التحريم", "الحجرات"],
+                correct: 0,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: 'كم مرة ذكرت كلمة "الصلاة" في القرآن؟',
+                options: ["٦٧", "٨٧", "٩٧", "١٠٧"],
+                correct: 0,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: 'ما السورة التي تسمى "الفاضحة"؟',
+                options: ["التوبة", "الحشر", "المنافقون", "المجادلة"],
+                correct: 0,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: "من الصحابي الذي أمره النبي بكتابة الوحي؟",
+                options: ["زيد بن ثابت", "معاوية بن أبي سفيان", "أبي بن كعب", "جميع ما سبق"],
+                correct: 3,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: "ما السورة التي نزلت في صلح الحديبية؟",
+                options: ["الفتح", "الحجرات", "التوبة", "الأحزاب"],
+                correct: 0,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: "كم آية في القرآن؟",
+                options: ["٦٢٣٦", "٦٣٦٦", "٦٦٦٦", "٦٢٢٦"],
+                correct: 0,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: 'ما السورة التي تسمى "المنجية"؟',
+                options: ["الملك", "الواقعة", "يس", "الدخان"],
+                correct: 0,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: "من الذي نسخ المصاحف زمن عثمان؟",
+                options: ["زيد بن ثابت", "عبد الله بن الزبير", "سعيد بن العاص", "جميع ما سبق"],
+                correct: 3,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: 'ما السورة التي تسمى "المنزلة"؟',
+                options: ["الفاتحة", "البقرة", "الكهف", "يس"],
+                correct: 2,
+                unit: "القرآن الكريم"
+            },
+            {
+                question: "كم سنة استغرق نزول القرآن؟",
+                options: ["٢٠", "٢٣", "٢٥", "٣٠"],
+                correct: 1,
+                unit: "القرآن الكريم"
+            },
+
+            // الوحدة الخامسة: الأخلاق
+            {
+                question: "ما حكم الغيبة؟",
+                options: ["حرام", "مكروه", "مباح", "جائز للضرورة"],
+                correct: 0,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما جزاء الصدقة؟",
+                options: ["تكفر السيئات", "تزيد الرزق", "تدفع البلاء", "جميع ما سبق"],
+                correct: 3,
+                unit: "الأخلاق"
+            },
+            {
+                question: "كم عدد أبواب الجنة؟",
+                options: ["٧", "٨", "٩", "١٠"],
+                correct: 1,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما حكم الكذب؟",
+                options: ["حرام", "مباح", "مكروه", "جائز للضرورة"],
+                correct: 0,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما أول ما يحاسب عليه العبد؟",
+                options: ["الصلاة", "الصيام", "الزكاة", "الحج"],
+                correct: 0,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما حكم إفطار المسافر في رمضان؟",
+                options: ["واجب", "حرام", "مباح", "مكروه"],
+                correct: 2,
+                unit: "الأخلاق"
+            },
+            {
+                question: 'ما السورة التي تسمى "المنجية من عذاب القبر"؟',
+                options: ["الملك", "الواقعة", "يس", "الدخان"],
+                correct: 0,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما حكم التبرع بالأعضاء؟",
+                options: ["حرام", "جائز بشروط", "واجب", "مكروه"],
+                correct: 1,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما حكم الغش في البيع؟",
+                options: ["حرام", "مباح", "مكروه", "جائز"],
+                correct: 0,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما جزاء بر الوالدين؟",
+                options: ["طول العمر", "زيادة الرزق", "دخول الجنة", "جميع ما سبق"],
+                correct: 3,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما حكم عقوق الوالدين؟",
+                options: ["حرام", "مباح", "مكروه", "جائز"],
+                correct: 0,
+                unit: "الأخلاق"
+            },
+            {
+                question: 'ما السورة التي تسمى "المانعة من عذاب القبر"؟',
+                options: ["الملك", "الواقعة", "يس", "الدخان"],
+                correct: 0,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما حكم شهادة الزور؟",
+                options: ["حرام", "مباح", "مكروه", "جائز"],
+                correct: 0,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما جزاء صلة الرحم؟",
+                options: ["زيادة العمر", "بركة في الرزق", "محبة الأهل", "جميع ما سبق"],
+                correct: 3,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما حكم النميمة؟",
+                options: ["حرام", "مباح", "مكروه", "جائز"],
+                correct: 0,
+                unit: "الأخلاق"
+            },
+            {
+                question: 'ما السورة التي تسمى "الواقية"؟',
+                options: ["الفلق", "الناس", "الإخلاص", "جميع ما سبق"],
+                correct: 3,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما حكم الحسد؟",
+                options: ["حرام", "مباح", "مكروه", "جائز"],
+                correct: 0,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما جزاء حسن الخلق؟",
+                options: ["قرب من النبي ﷺ يوم القيامة", "محبة الناس", "زيادة الحسنات", "جميع ما سبق"],
+                correct: 3,
+                unit: "الأخلاق"
+            },
+            {
+                question: "ما حكم السخرية من الآخرين؟",
+                options: ["حرام", "مباح", "مكروه", "جائز"],
+                correct: 0,
+                unit: "الأخلاق"
+            },
+            {
+                question: 'ما السورة التي تسمى "الشافية"؟',
+                options: ["الفاتحة", "البقرة", "يس", "الملك"],
+                correct: 0,
+                unit: "الأخلاق"
+            }
+        ];
+
+        const islamicSecondSemesterQuestions = [
+            // الوحدة الأولى: الإيمان بالله وعظمته
+            {
+                question: "ما هو الطور الذي يصف قطعة من الدم الجامد في مراحل خلق الإنسان كما ورد في الآيات الكريمة؟",
+                options: ["النطفة", "العلقة", "المضغة", "العظام"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هي الحكمة من ذكر الآيات الكريمة لمراحل حياة الإنسان من الطفولة إلى أرذل العمر؟",
+                options: ["لبيان قدرة الله على البعث بعد الموت", "لتأكيد أهمية الشباب والقوة", "لتشجيع الناس على طلب العلم", "لبيان ضعف الإنسان وعجزه"],
+                correct: 0,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما الذي يدل عليه إحياء الأرض بالمطر بعد موتها في سياق الآيات الكريمة؟",
+                options: ["أهمية الزراعة في حياة الإنسان", "قدرة الله على البعث بعد الموت", "دورة الحياة الطبيعية للنباتات", "ضرورة المحافظة على البيئة"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "لماذا ختمت الآيات الكريمة بذكر أن يوم القيامة له وقت معلوم عند الله ولا يعلمه إلا هو؟",
+                options: ["لبيان أهمية الاستعداد ليوم القيامة", "لتأكيد حقيقة البعث والحساب", "لبيان عجز الإنسان عن معرفة الغيب", "لترغيب الناس في التوبة"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هي إحدى الثمرات المترتبة على الإيمان بالبعث كما ورد في الدرس؟",
+                options: ["زيادة الرزق في الدنيا", "استقامة سلوك الإنسان في الحياة الدنيا", "تحقيق الشهرة والمكانة الاجتماعية", "التخلص من جميع المصائب"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: 'ما هو المعنى الذي يشير إليه قول الله تعالى في الحديث القدسي: "يا عبادي كلكم ضال إلا من هديته فاستهدوني أهدكم"؟',
+                options: ["أن الهداية لا تأتي إلا بطلبها من الله", "أن الإنسان يولد ضالاً بطبعه", "أن الله يهدي من يشاء بغير سبب", "أن الهداية مرتبطة بالجهد البشري فقط"],
+                correct: 0,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هي أعظم صور الظلم التي ذكرها الحديث القدسي؟",
+                options: ["ظلم الإنسان لنفسه بالمعاصي", "ظلم الإنسان لغيره بهضم الحقوق", "الشرك بالله", "ظلم الحاكم لرعيته"],
+                correct: 2,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: 'ما الذي يدل عليه قول الله تعالى في الحديث القدسي: "يا عبادي لو أن أولكم وآخركم وإنسكم وجنكم كانوا على أتقى قلب رجل واحد منكم ما زاد ذلك في ملكي شيئًا"؟',
+                options: ["أهمية التقوى في الإسلام", "غنى الله تعالى عن خلقه", "فضل الطاعة على المعصية", "عظمة ملك الله تعالى"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هي إحدى مظاهر افتقار الخلق إلى الله تعالى كما ورد في الحديث القدسي؟",
+                options: ["طلب الرزق", "طلب الشفاء من الأمراض", "طلب العلم", "طلب القوة والسلطة"],
+                correct: 0,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو الأثر المترتب على تحقيق العدل في المجتمع كما أشار إليه الدرس؟",
+                options: ["زيادة الثروات الاقتصادية", "شعور الناس بالأمان والمساواة", "انتشار العلم والمعرفة", "تقوية العلاقات الأسرية"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو أحد مظاهر مكانة العقل في الإسلام كما ورد في الدرس؟",
+                options: ["أنه أساس الاستدلال على وجود الله تعالى", "أنه وسيلة لتحقيق الثروة", "أنه يضمن الخلود في الدنيا", "أنه يرفع التكليف عن الإنسان"],
+                correct: 0,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: 'ما هو المقصود بمفهوم "حفظ العقل" في الشريعة الإسلامية؟',
+                options: ["حماية العقل من الأمراض الجسدية", "تنميته وحمايته من كل ما يفسده", "حفظ المعلومات في الذاكرة", "منع الإنسان من التفكير الزائد"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هي إحدى التوجيهات الإسلامية لحماية العقل ورعايته؟",
+                options: ["تشجيع تناول المخدرات لزيادة الإبداع", "تحريم شرب المسكرات", "الإيمان بالخرافات والأوهام", "منع التفكير في الأمور الغيبية"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو الأثر المترتب على ربط الإسلام بين العلم والإيمان في حفظ العقل؟",
+                options: ["جعل العلم طريقًا يقود صاحبه إلى معرفة الله وخشيته", "تشجيع الناس على التخصص في العلوم الدينية فقط", "منع التفكير في العلوم التجريبية", "حصر العلم في فئة معينة من الناس"],
+                correct: 0,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هي إحدى فوائد القراءة للعقل كما ورد في الدرس؟",
+                options: ["تقليل الحاجة إلى التفكير", "توسيع خيال القارئ وابتكار أفكار جديدة", "زيادة القدرة على الحفظ فقط", "منع الإنسان من التفاعل الاجتماعي"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو أحد مظاهر تكريم الله تعالى للإنسان كما ورد في الدرس؟",
+                options: ["جعله خليفة في الأرض", "منحه القدرة على الطيران", "إعطاؤه القدرة على التحكم في الكون", "جعله خالداً في الدنيا"],
+                correct: 0,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو المبدأ الذي يؤكد على حق الإنسان في اختيار دينه وممارسة شعائره التعبدية؟",
+                options: ["العدل", "المساواة", "الحرية", "الأمن"],
+                correct: 2,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو أحد صور الظلم التي تؤثر على كرامة الإنسان كما أشار إليها الدرس؟",
+                options: ["الغش في التجارة", "حرمان الورثة من الميراث", "الكذب في الحديث", "السرقة"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو المبدأ الذي يؤكد على أن الناس جميعًا من أصل واحد، ولا فضل لأحد على أحد إلا بالتقوى؟",
+                options: ["الحرية", "العدل", "المساواة", "الأمن"],
+                correct: 2,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو الأثر المترتب على توفير الأمن للإنسان في نفسه وماله وعرضه؟",
+                options: ["زيادة الثروة", "شعوره بالاستقرار والطمأنينة", "تحسين العلاقات الاجتماعية", "زيادة الإنتاجية"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو أول مسجد بني في المغرب العربي؟",
+                options: ["الجامع الأموي", "الجامع الأزهر", "جامع القيروان", "مسجد قباء"],
+                correct: 2,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو الدور العلمي الذي اشتهر به جامع القيروان؟",
+                options: ["كونه مركزًا لتعليم الطب والهندسة", "كونه أول مركز علمي في المغرب العربي", "كونه مركزًا لتدريس الفلسفة اليونانية", "كونه مركزًا لتعليم اللغات الأجنبية"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو أحد أبرز العلماء الذين درسوا في الجامع الأموي؟",
+                options: ["الإمام مالك بن أنس", "الإمام الغزالي", "ابن خلدون", "الإمام الشافعي"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو الدور الوطني الذي لعبه الجامع الأزهر؟",
+                options: ["كونه مركزًا للتجارة الدولية", "كونه مقرًا للحكم في مصر", "تزعمه قيادة المقاومة الشعبية ضد الحملة الفرنسية", "كونه مركزًا للتبادل الثقافي مع الغرب"],
+                correct: 2,
+                unit: "الإيمان بالله وعظمته"
+            },
+            {
+                question: "ما هو الفرق الرئيسي بين المسجد والجامع كما ورد في الدرس؟",
+                options: ["المسجد أكبر حجمًا من الجامع", "الجامع تقام فيه صلاة الجمعة، بينما المسجد لا تقام فيه", "المسجد مخصص للرجال فقط، بينما الجامع للرجال والنساء", "الجامع يطلق على المكان الذي تقام فيه الصلوات الخمس، بينما المسجد لا"],
+                correct: 1,
+                unit: "الإيمان بالله وعظمته"
+            },
+
+            // الوحدة الثانية: السيرة النبوية والأخلاق
+            {
+                question: "ما هي الحكمة من جعل الزوجين من أصل واحد كما ورد في الآيات الكريمة؟",
+                options: ["لزيادة عدد الأبناء", "لتحقيق السكن والمودة والرحمة", "لضمان استمرارية النسل فقط", "لبيان قدرة الله على الخلق"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما الذي يدل عليه اختلاف ألوان البشر ولغاتهم في سياق الآيات الكريمة؟",
+                options: ["عظمة الله تعالى وقدرته على الإيجاد", "أهمية التنوع الثقافي بين الشعوب", "ضرورة التمييز بين الأجناس", "أن البشر خلقوا من أصول مختلفة"],
+                correct: 0,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هي إحدى فوائد نعمة النوم كما ورد في الآيات الكريمة؟",
+                options: ["زيادة النشاط البدني", "الحصول على الراحة وذهاب التعب", "زيادة القدرة على التركيز", "تقليل الحاجة إلى الطعام"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هو الأثر النفسي المترتب على رؤية البرق والرعد كما ورد في الآيات الكريمة؟",
+                options: ["الخوف من الصواعق", "الطمع في الغيث", "الشعور بالرهبة من قدرة الله", "جميع ما ذكر"],
+                correct: 3,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هي الفئة التي تستفيد من التوجيهات الواردة في الآيات الكريمة من سورة الروم؟",
+                options: ["المؤمنون فقط", "أصحاب العقول السليمة", "البشر جميعًا", "العلماء والباحثون"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: 'ما هو المعنى الذي يشير إليه مصطلح "راعٍ" في الحديث الشريف "كلكم راعٍ ومسؤول عن رعيته"؟',
+                options: ["الحاكم", "حافظ مؤتمن", "المسؤول", "القائد"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هي إحدى مسؤوليات الحاكم تجاه رعيته كما ورد في الدرس؟",
+                options: ["جمع الثروات لنفسه", "كفالة حرياتهم وإقامة العدل بينهم", "فرض الضرائب الباهظة", "منعهم من التعبير عن آرائهم"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هي إحدى مسؤوليات الرجل تجاه أسرته كما أوجبها الإسلام؟",
+                options: ["الإنفاق على أسرته وتأمين حاجات أفرادها", "منع زوجته من العمل", "التحكم في جميع قرارات الأسرة", "إهمال تربية الأبناء"],
+                correct: 0,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هي إحدى المسؤوليات المشتركة بين الرجل والمرأة تجاه أبنائهما؟",
+                options: ["رعاية مواهب الأبناء وتنميتها", "توفير الطعام والشراب فقط", "تعليمهم الحرف اليدوية", "إجبارهم على الزواج المبكر"],
+                correct: 0,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هو الأثر المترتب على إتقان العامل لحرفته كما ورد في الحديث الشريف؟",
+                options: ["زيادة الأجر فقط", "تحقيق الخير والمصلحة للمؤسسات", "الحصول على الشهرة", "التخلص من المسؤولية"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هو السبب المباشر لفتح مكة؟",
+                options: ["رغبة المسلمين في السيطرة على التجارة", "نقض قريش لصلح الحديبية", "رغبة النبي في الانتقام من قريش", "انتشار الإسلام في مكة"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "لماذا أخفى النبي صلى الله عليه وسلم وجهته عند الخروج لفتح مكة؟",
+                options: ["لكي لا تستعد قريش للقتال", "لكي لا يعلم المنافقون بخروجه", "لكي يفاجئ قريشًا", "جميع ما ذكر"],
+                correct: 0,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هو الموقف الذي يدل على حرص النبي صلى الله عليه وسلم على عدم إراقة الدماء عند فتح مكة؟",
+                options: ["أمره بقتال من يقاوم", "إعطاؤه الأمان لمن دخل دار أبي سفيان أو أغلق بابه", "دخوله مكة بجيش كبير", "هدم الأصنام حول الكعبة"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هي إحدى النتائج الإيجابية لفتح مكة؟",
+                options: ["زيادة عدد المهاجرين إلى المدينة", "اعتناق كثير من أهل مكة وزعمائها دين الإسلام", "تحول مكة إلى مركز تجاري عالمي", "بناء مساجد جديدة في مكة"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: 'ما هي القيمة المستفادة من قول النبي صلى الله عليه وسلم لأهل مكة: "اذهبوا فأنتم الطلقاء"؟',
+                options: ["القوة", "العدل", "العفو والتسامح", "الشجاعة"],
+                correct: 2,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هو اللقب الذي اشتهر به يوسف بن نجم الدين أيوب التكريتي؟",
+                options: ["الملك العادل", "الملك الناصر", "قاهر الصليبيين", "فاتح القدس"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هي إحدى الصفات التي تميز بها صلاح الدين الأيوبي؟",
+                options: ["البخل", "التكبر", "التسامح", "الظلم"],
+                correct: 2,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هو أحد مظاهر اهتمام صلاح الدين الأيوبي بنشر العلم؟",
+                options: ["بناء القلاع والحصون", "فتح الكتاتيب لتعليم الصغار", "تشجيع التجارة الدولية", "بناء المستشفيات فقط"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هو الحدث الذي يدل على شجاعة صلاح الدين الأيوبي وثباته؟",
+                options: ["هزيمة جيشه في إحدى المعارك قرب عكا", "انسحابه من المعارك الصليبية", "قيادته لجيش المسلمين في معركة حطين", "توقيعه لمعاهدات صلح مع الصليبيين"],
+                correct: 2,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "في أي ذكرى حرر صلاح الدين الأيوبي القدس من الصليبيين؟",
+                options: ["المولد النبوي", "الإسراء والمعراج", "الهجرة النبوية", "فتح مكة"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هو الأساس الذي ينبغي مراعاته عند اختيار الزوج أو الزوجة لتحقيق الطمأنينة والمودة والرحمة؟",
+                options: ["المال والجمال", "الدين والخلق", "النسب والحسب", "الشهرة والمكانة"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هي إحدى صور المعاشرة بالمعروف بين الزوجين؟",
+                options: ["إثقال أحدهما على الآخر بكثرة المطالب", "حسن الظن والاحترام المتبادل", "إفشاء الأسرار الزوجية", "التجاوز عن الأخطاء دون تبرير"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هو الحق الذي يجب للزوجة على زوجها بمجرد عقد الزواج؟",
+                options: ["النفقة", "المهر", "الإرث", "الطاعة"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هو الأثر المترتب على قيام كل من الزوجين بحقوق الآخر؟",
+                options: ["زيادة المشاكل الأسرية", "استقرار الحياة الزوجية وحماية الأسرة من التفكك", "تقليل عدد الأبناء", "زيادة الخلافات بين الأقارب"],
+                correct: 1,
+                unit: "السيرة النبوية والأخلاق"
+            },
+            {
+                question: "ما هو حكم إفشاء الأسرار الزوجية في الإسلام؟",
+                options: ["مباح عند الضرورة", "مكروه", "محرم", "مستحب لتقوية العلاقة"],
+                correct: 2,
+                unit: "السيرة النبوية والأخلاق"
+            },
+
+            // الوحدة الثالثة: العقيدة والعبادات
+            {
+                question: 'ما هو المعنى الذي يشير إليه قول الله تعالى: "ولتنظر نفس ما قدمت لغد"؟',
+                options: ["أهمية التخطيط للمستقبل الدنيوي", "ضرورة محاسبة النفس والاستعداد ليوم القيامة", "الحث على العمل الصالح في الدنيا", "التذكير بقصر الحياة الدنيا"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هي الحكمة من ضرب الله تعالى المثل بتصدع الجبل عند نزول القرآن الكريم عليه؟",
+                options: ["لبيان عظمة القرآن الكريم وتأثيره", "لبيان قوة الجبال", "لترغيب الناس في قراءة القرآن", "لبيان عجز الإنسان عن حمل القرآن"],
+                correct: 0,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: 'ما هو المعنى الذي يشير إليه اسم الله "القدوس"؟',
+                options: ["السالم من كل عيب ونقص", "الذي يهب عباده الأمن والطمأنينة", "المتفرد بالجلال والعظمة", "الذي أوجد الأشياء وأبدعها"],
+                correct: 0,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هو الأثر المترتب على تمثل المسلم لأسماء الله الحسنى وصفاته في سلوكه؟",
+                options: ["زيادة ثروته", "تحسين علاقاته بالآخرين", "حصوله على الشهرة", "جميع ما ذكر"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: 'ما هو حكم التجويد في لفظ "الرحمن" في قوله تعالى: "هو الله الذي لا إله إلا هو الرحمن الرحيم"؟',
+                options: ["ترقيق الراء", "تفخيم الراء", "إخفاء", "إدغام"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: 'ما هو المقصود بمفهوم "الأمر بالمعروف والنهي عن المنكر"؟',
+                options: ["دعوة الناس إلى كل خير وفضيلة ونهيهم عن كل شر ورذيلة", "إجبار الناس على فعل الخير", "منع الناس من فعل الشر بالقوة", "نصح الأصدقاء فقط"],
+                correct: 0,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هو حكم الأمر بالمعروف والنهي عن المنكر في الإسلام؟",
+                options: ["سنة مؤكدة", "مستحب", "واجب على كل مسلم ومسلمة", "فرض كفاية"],
+                correct: 2,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هي إحدى الآثار المترتبة على ترك الأمر بالمعروف والنهي عن المنكر؟",
+                options: ["زيادة الخير في المجتمع", "انتشار أسباب الفساد وسوء الأخلاق", "تقوية الروابط الاجتماعية", "نيل السعادة والفلاح"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هي إحدى ضوابط الأمر بالمعروف والنهي عن المنكر؟",
+                options: ["استخدام العنف والقسوة", "التغيير باليد فقط", "التحلي بالحكمة والموعظة الحسنة", "اليأس من الناس"],
+                correct: 2,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هي المرتبة التي تكون مسؤولية الجميع، خاصة من عجز عن المرتبتين الأوليين؟",
+                options: ["التغيير باليد", "التغيير باللسان", "التغيير بالقلب", "التغيير بالمال"],
+                correct: 2,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هو مفهوم الوحدة الوطنية؟",
+                options: ["تماسك أبناء الوطن وتفانيهم في خدمته والدفاع عنه دون النظر إلى الاختلافات", "توحيد جميع الأديان في الوطن", "سيطرة عرق واحد على الوطن", "منع الاختلافات الثقافية في الوطن"],
+                correct: 0,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هي إحدى توجيهات الإسلام لتحقيق الوحدة الوطنية؟",
+                options: ["تشجيع التعصب العرقي", "تأكيد الأخوة الإنسانية", "منع الاختلاط بين الأديان", "إقصاء الأقليات"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هو الأثر المترتب على المساواة بين جميع أفراد المجتمع في الحقوق والواجبات؟",
+                options: ["زيادة التنافس بين الأفراد", "شعور الناس بالظلم", "تحقيق العدل والاستقرار", "تقليل الإنتاجية"],
+                correct: 2,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: 'ما هو المبدأ الذي يشير إليه قول النبي صلى الله عليه وسلم: "مثل المؤمنين في توادهم وتراحمهم وتعاطفهم مثل الجسد؛ إذا اشتكى منه عضو تداعى له سائر الجسد بالسهر والحمى"؟',
+                options: ["المساواة", "التكافل", "الحرية", "العدل"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هي إحدى دعائم الوحدة الوطنية في الأردن؟",
+                options: ["التنوع العرقي والديني", "القيادة الهاشمية", "الثروات الطبيعية", "الموقع الجغرافي"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هو مفهوم الفقر كما ورد في الدرس؟",
+                options: ["عدم امتلاك الثروة", "عجز الإنسان عن سد حاجاته الأساسية", "عدم القدرة على شراء الكماليات", "عدم وجود عمل"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هي إحدى مخاطر الفقر على السلوك والأخلاق؟",
+                options: ["انتشار الصدق والأمانة", "ارتكاب المحظورات مثل الغش والكذب", "زيادة التعاون بين الناس", "تقوية الروابط الأسرية"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هي إحدى أسباب الفقر المتعلقة بالفرد نفسه؟",
+                options: ["قلة الموارد الاقتصادية", "الكسل والعزوف عن العمل", "الكوارث الطبيعية", "غياب الأمن والاستقرار"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هو أحد وسائل منهج الإسلام في معالجة مشكلة الفقر؟",
+                options: ["تشجيع التسول", "حصر الثروة في فئة معينة", "تحقيق التكافل الاجتماعي عن طريق الزكاة والصدقات", "منع الناس من العمل"],
+                correct: 2,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هو الأثر المترتب على إقامة العدل ومكافحة الفساد المالي والإداري في معالجة الفقر؟",
+                options: ["زيادة البطالة", "انتشار الفقر", "تحسين الخدمات وتوفير فرص العمل", "تقليل الاستثمار"],
+                correct: 2,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: 'ما هو مفهوم "تنظيم النسل"؟',
+                options: ["اتخاذ إجراءات تمنع الحمل نهائيًا", "اتخاذ وسيلة مشروعة لإيجاد مدد زمنية متباعدة بين مرات الحمل", "إجبار الناس على عدم الإنجاب", "تحديد عدد معين من الأبناء لكل أسرة"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هو حكم تنظيم النسل في الإسلام عند توافر الأسباب والدوافع؟",
+                options: ["محرم", "مكروه", "مباح", "واجب"],
+                correct: 2,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هي إحدى الدوافع المعتبرة لإباحة تنظيم النسل؟",
+                options: ["الخوف من الفقر", "الحفاظ على صحة الأم", "الرغبة في عدم الإنجاب نهائيًا", "عدم الرغبة في تحمل المسؤولية"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: 'ما هو مفهوم "تحديد النسل"؟',
+                options: ["المباعدة بين مرات الحمل", "اتخاذ إجراءات تمنع الحمل نهائيًا", "استخدام وسائل منع الحمل المؤقتة", "تنظيم الأسرة"],
+                correct: 1,
+                unit: "العقيدة والعبادات"
+            },
+            {
+                question: "ما هو حكم تحديد النسل إذا كان لداعي الخوف على رزق الأولاد؟",
+                options: ["مباح", "مكروه", "محرم", "مستحب"],
+                correct: 2,
+                unit: "العقيدة والعبادات"
+            },
+
+            // الوحدة الرابعة: الحضارة الإسلامية
+            {
+                question: "ما هو مفهوم المثل القرآني؟",
+                options: ["قصة تاريخية حدثت في الماضي", "أسلوب استخدمه القرآن لتشبيه شيء بشيء آخر بهدف تقريب المعنى", "آية قرآنية لا تحتاج إلى تفسير", "حكمة بليغة لا تحتاج إلى شرح"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هي الغاية من ضرب المثل القرآني الذي يصف المنافقين بشخص أشعل نارًا ثم انطفأت؟",
+                options: ["المدح", "الذم", "الترغيب", "التنفير"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هي الغاية من ضرب المثل القرآني الذي يصف الكلمة الطيبة بالشجرة الطيبة؟",
+                options: ["التنفير", "الترغيب", "المدح", "الذم"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هي الغاية من ضرب المثل القرآني الذي يصف قوة النبي صلى الله عليه وسلم والصحابة الكرام بالزرع الذي بدأ ضعيفًا ثم اشتد عوده؟",
+                options: ["الذم", "التنفير", "المدح", "تقريب الصورة"],
+                correct: 2,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هي إحدى مميزات المثل القرآني؟",
+                options: ["أنه مثل خيالي لا علاقة له بالواقع", "أنه مثل واقعي قريب من حياة الناس", "أنه مثل صعب الفهم", "أنه مثل مخصص للعلماء فقط"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو أحد أشكال العنف التي حمى الإسلام المرأة منها؟",
+                options: ["العنف اللفظي", "العنف الجسدي", "العنف النفسي", "جميع ما ذكر"],
+                correct: 3,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: 'ما هو الحق الذي يدل عليه قول النبي صلى الله عليه وسلم: "الزم رجليها فثم الجنة"؟',
+                options: ["حق المرأة في التعليم", "حق المرأة في العمل", "حق المرأة في التكريم والتقدير والرعاية كأم", "حق المرأة في الزواج"],
+                correct: 2,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو الأثر المترتب على إقرار الإسلام لحق المرأة في التعليم؟",
+                options: ["تقليل دورها في المجتمع", "تمكينها من أداء واجباتها الدينية والدنيوية", "حصرها في العلوم الدينية", "منعها من العمل"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو الحق الذي يدل عليه موقف السيدة أم سلمة رضي الله عنها يوم الحديبية؟",
+                options: ["حق المرأة في الحضانة", "حق المرأة في إبداء الرأي والمشاركة في بناء المجتمع", "حق المرأة في اختيار الزوج", "حق المرأة في العمل"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو حكم قذف المحصنات في الإسلام؟",
+                options: ["مباح عند الضرورة", "مكروه", "محرم ويعاقب عليه", "مستحب لبيان الحق"],
+                correct: 2,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: 'ما هو مفهوم "العرف"؟',
+                options: ["كل ما اعتاد عليه الناس وتقبلوه من التصرفات الحسنة التي لا تتعارض مع مبادئ الشريعة الإسلامية", "كل ما اعتاد عليه الناس من عادات وتقاليد", "كل ما ورد في القرآن والسنة", "كل ما اتفق عليه الفقهاء"],
+                correct: 0,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هي إحدى أهميات العرف في التشريع الإسلامي؟",
+                options: ["أنه يسهل على الناس حياتهم ويرفع عنهم الحرج", "أنه يلغي الحاجة إلى النصوص الشرعية", "أنه يفرض عادات وتقاليد جديدة", "أنه يحد من حرية الأفراد"],
+                correct: 0,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو الدليل الشرعي الذي يدل على حجية العرف في تحديد مقدار النفقة؟",
+                options: ['قول الله تعالى: "وعاشروهن بالمعروف"', 'قول الله تعالى: "وعلى المولود له رزقهن وكسوتهن بالمعروف"', 'قول النبي صلى الله عليه وسلم: "ما رآه المسلمون حسنًا فهو عند الله حسن"', "موقف هند بنت عتبة مع النبي صلى الله عليه وسلم"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو أحد ضوابط العمل بالعرف؟",
+                options: ["أن يكون العرف مخالفًا للنص الشرعي", "أن يكون العرف خاصًا بفئة معينة", "أن يكون العرف غالبًا وشائعًا بين الناس", "أن يكون العرف قديمًا جدًا"],
+                correct: 2,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هي القاعدة الفقهية التي تعني أن العادة تعد دليلاً عمليًا لحكم مسألة إذا لم يوجد نص صريح؟",
+                options: ["الضرورات تبيح المحظورات", "العادة محكمة", "المعروف عرفًا كالمشروط شرطًا", "المشقة تجلب التيسير"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو السبب المباشر ليوم تبوك؟",
+                options: ["رغبة المسلمين في فتح بلاد الروم", "وصول أنباء عن حشود عظيمة للروم وحلفائهم للهجوم على المسلمين", "رغبة النبي في نشر الإسلام بالقوة", "الانتقام لمقتل سفير النبي صلى الله عليه وسلم"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "لماذا أخبر النبي صلى الله عليه وسلم الناس عن وجهته في غزوة تبوك على غير عادته؟",
+                options: ["لكي يتهيأ الناس ويستعدوا للنفر", "لكي لا يعلم المنافقون بخروجه", "لكي يفاجئ العدو", "لكي يختبر إيمان الصحابة"],
+                correct: 0,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو الموقف الذي يدل على كشف حقيقة المنافقين وفضح خططهم في يوم تبوك؟",
+                options: ["اعتذارهم الكاذب عن عدم الخروج", "بناء مسجد الضرار", "محاولتهم التشكيك في صدق النبي", "جميع ما ذكر"],
+                correct: 3,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هي إحدى النتائج المهمة ليوم تبوك؟",
+                options: ["هزيمة المسلمين", "ظهور المسلمين كقوة كبيرة قادرة على رد العدوان", "توقيع معاهدات صلح مع الروم", "زيادة عدد المنافقين"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هي القيمة المستفادة من موقف الصحابة الثلاثة الذين تخلفوا عن الغزوة واعترفوا بذنوبهم؟",
+                options: ["الصدق ينجي صاحبه", "التوبة تجب ما قبلها", "أهمية الجهاد في سبيل الله", "جميع ما ذكر"],
+                correct: 0,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو أحد أسس بناء الحضارة الإسلامية؟",
+                options: ["الاستفادة من العلوم والتجارب البشرية", "الاعتماد على القوة العسكرية فقط", "حصر العلم في فئة معينة", "رفض جميع الحضارات السابقة"],
+                correct: 0,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هي الخاصية التي تدل على أن الحضارة الإسلامية معنية بالإنسان في كل مكان وزمان دون النظر إلى الجنس أو اللون أو الدين؟",
+                options: ["حضارة إيمانية", "حضارة إنسانية", "حضارة شاملة", "حضارة أخلاقية"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هي الخاصية التي تدل على أن الحضارة الإسلامية تميزت بالوسطية في الفكر والتوجه والسلوك؟",
+                options: ["حضارة علمية", "حضارة مرنة ومنفتحة", "حضارة وسطية", "حضارة شاملة"],
+                correct: 2,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو أحد مظاهر أثر الحضارة الإسلامية في المجال العلمي والثقافي؟",
+                options: ["اختراع الأسلحة الحديثة", "وضع منهج علمي يعتمد على الملاحظة والتجربة", "بناء القصور الفخمة", "تطوير الفنون القتالية"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو أحد أسباب تراجع الدور الحضاري للمسلمين الداخلية؟",
+                options: ["الهيمنة الأجنبية", "انتشار الفرقة والعصبية", "الهيمنة الاقتصادية", "الهيمنة الفكرية والثقافية"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو أحد أسباب تراجع الدور الحضاري للمسلمين الخارجية؟",
+                options: ["انتشار الفرقة والعصبية", "التراجع العلمي", "الهيمنة الأجنبية", "سيطرة الحياة المادية"],
+                correct: 2,
+                unit: "الحضارة الإسلامية"
+            },
+            {
+                question: "ما هو أحد سبل استعادة الدور الريادي للحضارة الإسلامية في بناء الإنسانية؟",
+                options: ["التمسك بالتقليد الأعمى", "الإفادة من المنهج العلمي في بناء المعرفة", "تشجيع التعصب المذهبي", "رفض جميع الحضارات الأخرى"],
+                correct: 1,
+                unit: "الحضارة الإسلامية"
+            }
+        ];
+
+        // Demo Questions Generator
+        function generateDemoQuestions(subject) {
+            const demoQuestions = [];
+            const subjects = {
+                arabic: {
+                    name: 'اللغة العربية',
+                    units: ['النحو والصرف', 'البلاغة', 'الأدب والنصوص', 'الإملاء والخط', 'التعبير']
+                },
+                english: {
+                    name: 'English Language',
+                    units: ['Grammar', 'Vocabulary', 'Reading Comprehension', 'Writing', 'Literature']
+                },
+                history: {
+                    name: 'التاريخ',
+                    units: ['التاريخ القديم', 'التاريخ الإسلامي', 'التاريخ الحديث', 'التاريخ المعاصر', 'الحضارات']
+                }
+            };
+
+            const subjectData = subjects[subject];
+            if (!subjectData) return [];
+
+            for (let i = 0; i < 20; i++) {
+                const unit = subjectData.units[i % subjectData.units.length];
+                demoQuestions.push({
+                    question: `سؤال تجريبي رقم ${i + 1} في ${subjectData.name} - ${unit}`,
+                    options: [
+                        `الخيار الأول للسؤال ${i + 1}`,
+                        `الخيار الثاني للسؤال ${i + 1}`,
+                        `الخيار الثالث للسؤال ${i + 1}`,
+                        `الخيار الرابع للسؤال ${i + 1}`
+                    ],
+                    correct: Math.floor(Math.random() * 4),
+                    unit: unit
+                });
+            }
+
+            return demoQuestions;
+        }
+
+        // Navigation Functions
+        function showHome() {
+            hideAllScreens();
+            document.getElementById('home-screen').classList.remove('hidden');
+        }
+
+        function showSubjects() {
+            hideAllScreens();
+            document.getElementById('subjects-screen').classList.remove('hidden');
+        }
+
+        function showSemesters(subject) {
+            currentSubject = subject;
+            hideAllScreens();
+            document.getElementById('subject-name').textContent = subjectNames[subject];
+            document.getElementById('semesters-screen').classList.remove('hidden');
+        }
+
+        function startQuiz(semester) {
+            currentSemester = semester;
+            loadQuestions();
+            hideAllScreens();
+            
+            // Update quiz start screen
+            const semesterName = semester === 'first' ? 'الفصل الأول' : 'الفصل الثاني';
+            document.getElementById('quiz-title').textContent = `${subjectNames[currentSubject]} - ${semesterName}`;
+            document.getElementById('quiz-info').textContent = `عدد الأسئلة: ${questions.length} سؤال`;
+            
+            document.getElementById('quiz-start-screen').classList.remove('hidden');
+        }
+
+        function startQuizTimer() {
+            hideAllScreens();
+            initializeQuizState();
+            startTimer();
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            displayCurrentQuestion();
+        }
+
+        function hideAllScreens() {
+            const screens = ['home-screen', 'subjects-screen', 'semesters-screen', 'quiz-start-screen', 'quiz-screen', 'results-screen'];
+            screens.forEach(screen => {
+                document.getElementById(screen).classList.add('hidden');
+            });
+        }
+
+        // Quiz Functions
+        function loadQuestions() {
+            if (currentSubject === 'islamic' && currentSemester === 'first') {
+                questions = [...islamicFirstSemesterQuestions];
+            } else if (currentSubject === 'islamic' && currentSemester === 'second') {
+                questions = [...islamicSecondSemesterQuestions];
+            } else {
+                questions = generateDemoQuestions(currentSubject);
+            }
+        }
+
+        function initializeQuizState() {
+            quizState = {
+                currentQuestionIndex: 0,
+                userAnswers: new Array(questions.length).fill(null),
+                startTime: Date.now(),
+                isCompleted: false,
+                timeLeft: 3600 // ساعة واحدة بالثواني
+            };
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                quizState.timeLeft--;
+                updateTimerDisplay();
+                
+                if (quizState.timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const hours = Math.floor(quizState.timeLeft / 3600);
+            const minutes = Math.floor((quizState.timeLeft % 3600) / 60);
+            const seconds = quizState.timeLeft % 60;
+            
+            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            const timerElement = document.getElementById('timer-display');
+            timerElement.textContent = `⏰ الوقت المتبقي: ${timeString}`;
+            
+            // Change color based on remaining time
+            if (quizState.timeLeft < 300) { // Less than 5 minutes
+                timerElement.className = 'text-lg font-bold text-destructive';
+            } else if (quizState.timeLeft < 600) { // Less than 10 minutes
+                timerElement.className = 'text-lg font-bold text-orange-500';
+            } else {
+                timerElement.className = 'text-lg font-bold text-success';
+            }
+        }
+
+        function displayCurrentQuestion() {
+            const currentQuestion = questions[quizState.currentQuestionIndex];
+            const progress = ((quizState.currentQuestionIndex + 1) / questions.length) * 100;
+            
+            // Update header
+            const semesterName = currentSemester === 'first' ? 'الفصل الأول' : 'الفصل الثاني';
+            document.getElementById('quiz-header-title').textContent = `${subjectNames[currentSubject]} - ${semesterName}`;
+            document.getElementById('quiz-unit').textContent = currentQuestion.unit;
+            document.getElementById('question-counter').textContent = `السؤال ${quizState.currentQuestionIndex + 1} من ${questions.length}`;
+            
+            // Update progress bar
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            // Display question
+            document.getElementById('question-text').textContent = currentQuestion.question;
+            
+            // Display options
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            currentQuestion.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary hover:bg-blue-50 transition-all w-full';
+                optionDiv.innerHTML = `
+                    <input type="radio" name="answer" value="${index}" id="option-${index}" 
+                           ${quizState.userAnswers[quizState.currentQuestionIndex] === index ? 'checked' : ''}
+                           class="ml-3 h-4 w-4 text-primary">
+                    <label for="option-${index}" class="font-medium text-lg cursor-pointer flex-1">${option}</label>
+                `;
+                
+                optionDiv.addEventListener('click', () => {
+                    const radioInput = optionDiv.querySelector('input[type="radio"]');
+                    radioInput.checked = true;
+                    handleAnswerChange(index);
+                });
+                
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Update navigation buttons
+            updateNavigationButtons();
+        }
+
+        function handleAnswerChange(answerIndex) {
+            quizState.userAnswers[quizState.currentQuestionIndex] = answerIndex;
+            updateNavigationButtons();
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const answerRequiredMsg = document.getElementById('answer-required-msg');
+            
+            // Previous button
+            prevBtn.disabled = quizState.currentQuestionIndex === 0;
+            if (prevBtn.disabled) {
+                prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+            
+            // Next button
+            const hasAnswer = quizState.userAnswers[quizState.currentQuestionIndex] !== null;
+            nextBtn.disabled = !hasAnswer;
+            
+            if (!hasAnswer) {
+                nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                nextBtn.classList.remove('bg-primary', 'hover:bg-primary/80');
+                nextBtn.classList.add('bg-gray-400');
+            } else {
+                nextBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-400');
+                nextBtn.classList.add('bg-primary', 'hover:bg-primary/80');
+            }
+            
+            // Update button text for last question
+            if (quizState.currentQuestionIndex === questions.length - 1) {
+                nextBtn.textContent = 'إنهاء الاختبار';
+            } else {
+                nextBtn.textContent = 'السؤال التالي';
+            }
+            
+            // Show/hide answer required message
+            if (!hasAnswer) {
+                answerRequiredMsg.classList.remove('hidden');
+            } else {
+                answerRequiredMsg.classList.add('hidden');
+            }
+        }
+
+        function navigateQuestion(direction) {
+            if (direction === 1) {
+                // Check if answer is provided before proceeding
+                if (quizState.userAnswers[quizState.currentQuestionIndex] === null) {
+                    return;
+                }
+                
+                if (quizState.currentQuestionIndex === questions.length - 1) {
+                    finishQuiz();
+                    return;
+                }
+                
+                quizState.currentQuestionIndex++;
+            } else {
+                if (quizState.currentQuestionIndex > 0) {
+                    quizState.currentQuestionIndex--;
+                }
+            }
+            
+            displayCurrentQuestion();
+        }
+
+        function finishQuiz() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            quizState.isCompleted = true;
+            const results = calculateResults();
+            showResults(results);
+        }
+
+        function calculateResults() {
+            let totalCorrect = 0;
+            const unitResults = {};
+            
+            questions.forEach((question, index) => {
+                const isCorrect = quizState.userAnswers[index] === question.correct;
+                if (isCorrect) totalCorrect++;
+                
+                // Group by unit
+                if (!unitResults[question.unit]) {
+                    unitResults[question.unit] = { correct: 0, total: 0 };
+                }
+                unitResults[question.unit].total++;
+                if (isCorrect) unitResults[question.unit].correct++;
+            });
+            
+            const totalQuestions = questions.length;
+            const percentage = Math.round((totalCorrect / totalQuestions) * 100);
+            const isPassed = percentage >= 50;
+            const timeTaken = Math.round((Date.now() - quizState.startTime) / 1000 / 60);
+            
+            return {
+                totalCorrect,
+                totalQuestions,
+                percentage,
+                unitResults,
+                timeTaken,
+                isPassed
+            };
+        }
+
+        function showResults(results) {
+            hideAllScreens();
+            
+            // Determine result info
+            let resultInfo;
+            if (results.percentage >= 90) {
+                resultInfo = { icon: '🏆', message: 'ممتاز! أداء رائع جداً', color: 'text-yellow-500' };
+            } else if (results.percentage >= 80) {
+                resultInfo = { icon: '🎉', message: 'جيد جداً! استمر في التفوق', color: 'text-green-500' };
+            } else if (results.percentage >= 70) {
+                resultInfo = { icon: '👍', message: 'جيد! يمكنك تحسين أدائك', color: 'text-blue-500' };
+            } else if (results.percentage >= 60) {
+                resultInfo = { icon: '📚', message: 'مقبول، تحتاج لمزيد من المراجعة', color: 'text-orange-500' };
+            } else {
+                resultInfo = { icon: '💪', message: 'لا تيأس، واصل التحضير', color: 'text-red-500' };
+            }
+            
+            // Update result display
+            document.getElementById('result-icon').textContent = resultInfo.icon;
+            document.getElementById('result-percentage').textContent = `${results.percentage}%`;
+            document.getElementById('result-percentage').className = `text-6xl font-bold mb-4 ${resultInfo.color}`;
+            document.getElementById('result-message').textContent = resultInfo.message;
+            
+            // Pass/Fail status
+            const passStatus = document.getElementById('pass-status');
+            if (results.isPassed) {
+                passStatus.textContent = '✅ ناجح';
+                passStatus.className = 'text-2xl font-bold mb-8 px-6 py-3 rounded-lg bg-green-100 text-green-800';
+            } else {
+                passStatus.textContent = '❌ راسب';
+                passStatus.className = 'text-2xl font-bold mb-8 px-6 py-3 rounded-lg bg-red-100 text-red-800';
+            }
+            
+            // Overall stats
+            document.getElementById('total-questions').textContent = results.totalQuestions;
+            document.getElementById('total-correct').textContent = results.totalCorrect;
+            document.getElementById('total-incorrect').textContent = results.totalQuestions - results.totalCorrect;
+            document.getElementById('time-taken').textContent = `${results.timeTaken} دقيقة`;
+            
+            // Unit results
+            const unitResultsContainer = document.getElementById('unit-results');
+            unitResultsContainer.innerHTML = '';
+            
+            Object.entries(results.unitResults).forEach(([unit, result]) => {
+                const unitPercentage = Math.round((result.correct / result.total) * 100);
+                const unitDiv = document.createElement('div');
+                unitDiv.className = 'bg-gray-50 rounded-lg border border-border';
+                unitDiv.innerHTML = `
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-medium text-sm">${unit}</span>
+                            <span class="font-bold ${unitPercentage >= 70 ? 'text-success' : 'text-destructive'}">
+                                ${unitPercentage}%
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm text-gray-600">
+                            <span>${result.correct} من ${result.total}</span>
+                            <div class="w-24 bg-secondary rounded-full h-2">
+                                <div class="bg-primary h-2 rounded-full" style="width: ${unitPercentage}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                unitResultsContainer.appendChild(unitDiv);
+            });
+            
+            document.getElementById('results-screen').classList.remove('hidden');
+        }
+
+        function retryQuiz() {
+            startQuiz(currentSemester);
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            showHome();
+        });
+    </script>
+</body>
+</html>
